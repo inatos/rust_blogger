@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <div class="card">
+      <h5 class="card-header">
+          Welcome to Rust Blogger!
+      </h5>
+      <div class="card-body">
+        <p>
+          <code>TL;DR:</code> Put cool intro here <span><img src="/bundle/content/image/UpsideDownSmiley.png"/></span>
+        </p>
+      </div>
+  </div>
+
+  {% if post %}
+    <div>
+      <h2 class="heading">~ Latest Post ~</h2>
+    </div>
+    <div class="card">
+      <h5 class="card-header">
+        {% if post.group %}
+            <a href="{{post_link}}">{{post.group}}: {{post.title}}</a>
+        {% else %} 
+            <a href="{{post_link}}">{{post.title}}</a>
+        {% endif %}
+      </h5>
+      <div class="card-body">
+        <footer class="blockquote-footer">Posted: <cite title="{{post.created}}">{{post.created | date}}</cite></footer>
+        <p class="card-text">
+          <div id="postContent_{{post.id}}">{{post.content}}</div>
+          {% if post.embedded %}
+              <script>
+                  $("#postContent_{{post.id}}").html($("#postContent_{{post.id}}").text());
+              </script>
+          {% endif %}
+        </p>
+        {% if post.created == post.updated %}
+          <footer class="blockquote-footer">Updated: <cite title="{{post.updated}}">{{post.updated | date}}</cite></footer>
+        {% endif %}
+        <hr />
+        Head to the <a href="{{post_link}}">page</a> for discussion!
+      </div>
+    </div>
+  {% else %}
+    <div>
+      <h1 class="heading">No new posts!</h1>
+    </div>
+  {% endif %}
+  <img class="logo-footer navbar-brand" src="/bundle/content/image/favicon/favicon.ico" />
+
+{% endblock %}

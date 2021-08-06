@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+  <h5 class="card-header">
+    <a href="#">Contact Stuff</a>
+  </h5>
+  <div class="card-body">
+    <p class="card-text">
+      <div id="contactContent">Contact prompt...</div>
+    </p>
+    <hr />
+    
+    <div class="accordion" id="infoSection">
+      <!-- Contact Info -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contactInfoCollapse" aria-expanded="false" aria-controls="contactInfoCollapse">
+            <h5>Contact Info</h5>
+          </button>
+        </h2>
+        <div id="contactInfoCollapse" class="accordion-collapse collapse" aria-labelledby="contactInfoHeading" data-bs-parent="#infoSection">
+          <div class="accordion-body">
+            <div>
+              <label for="email" class="form-label">Email</label>
+              <p id="email">
+                <a href="mailto:YourEmail@gmail.com?subject=Rust Blogger Inquiry">YourEmail@gmail.com</a>
+              </p>
+            </div>                
+            <hr/>
+            <div>
+              <label for="linkedIn" class="form-label">LinkedIn</label>
+              <p id="linkedIn">
+                <a href="#" target="_blank">Profile</a>
+              </p>
+            </div>                
+            <hr/>
+            <div>
+              <label for="github" class="form-label">GitHub</label>
+              <p id="github">
+                <a href="#" target="_blank">Profile</a>
+              </p>
+            </div>                
+            <hr/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resume -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#resumeCollapse" aria-expanded="false" aria-controls="resumeCollapse">
+            <h5>Resume</h5>
+          </button>
+        </h2>
+        <div id="resumeCollapse" class="accordion-collapse collapse" aria-labelledby="resumeHeading" data-bs-parent="#infoSection">
+          <div class="accordion-body">
+            <div>
+              <label for="comment" class="form-label">Resume Doc</label>
+              <p id="comment" name="comment">
+                <a href="#" target="_blank" rel="noopener noreferrer">Take a look!</a>
+              </p>
+            </div>                
+            <hr/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<img class="logo-footer navbar-brand" src="/bundle/content/image/favicon/favicon.ico" />
+{% endblock %}

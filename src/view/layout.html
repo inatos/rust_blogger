@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <!-- CSS -->
+        <link rel="stylesheet" href="/bundle/content/css/bootstrap/bootstrap.min.css" />  
+         <link rel="stylesheet" href="/bundle/content/css/bootstrap-select/bootstrap-select.min.css" />  
+        <link rel="stylesheet" href="/bundle/content/css/site/site.css" />
+        <link rel="stylesheet" href="/bundle/content/css/site/dark.css" />
+
+        <!-- Scripts -->
+        <script src="/bundle/script/jquery/jquery-3.6.0.min.js"></script>
+        <script src="/bundle/script/bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="/bundle/script/bootstrap-select/bootstrap-select.min.js"></script>
+        <script src="/bundle/script/autosize/autosize.min.js"></script>
+        <script src="/bundle/script/site.js"></script>
+
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/bundle/content/image/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/bundle/content/image/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/bundle/content/image/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/bundle/content/image/favicon/site.webmanifest">
+        <link rel="mask-icon" href="/bundle/content/image/favicon/safari-pinned-tab.svg" color="#9e0b99">
+        <meta name="msapplication-TileColor" content="#000000">
+        <meta name="theme-color" content="#ffffff">
+
+        <title>{{title}}</title>
+    </head>
+    <body>
+        <!-- Nav Bar -->
+        <div id="navbarPlaceholder"></div>
+        <script>
+            $(function() {
+                $("#navbarPlaceholder").load("../navbar.html");
+            });
+        </script>
+
+        <!-- Page Content -->
+        {% block content %}
+        {% endblock content %}
+
+        <!-- Modals -->
+        <div id="signupModalPlaceholer"></div>
+        <div id="loginModalPlaceholer"></div>   
+    </body>
+</html>

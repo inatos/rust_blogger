@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <script src="/bundle/script/posts.js"></script>
+
+  {% if posts %}
+    <div class="row row-cols-1 row-cols-md-3 g-4 card-grid">
+      {% for post in posts %}
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-top">&nbsp;</div>
+            <div class="card-body">
+              <h5 class="card-title">
+                <a href="{{post.label}}">{{post.title}}</a>
+              </h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Updated: {{post.updated | date}}</small>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div>
+        <h1 class="banner">No new projects!</h1>
+    </div>
+  {% endif %}
+  <img class="logo-footer navbar-brand" src="/bundle/content/image/favicon/favicon.ico" />
+{% endblock %}

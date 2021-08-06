@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <script src="/bundle/script/users.js"></script>
+
+  <!-- Users -->
+  <div class="card">
+    <h5 class="card-header">
+      Users
+    </h5>
+    <div class="card-body">
+      {% if users %}
+        <table class="table table-dark table-striped table-hover">
+          <tr>
+            <th></th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Status</th>
+          </tr>
+          {% for user in users %}
+            <tr>
+              <td><button class="btn btn-icon art" onclick="PopulateModal('{{user.id}}');" data-bs-toggle="modal" data-bs-target="#editModal"></button></td>
+              <td id="username_{{user.id}}">{{user.username}}</td>
+              <td id="email_{{user.id}}">{{user.email}}</td>
+              <td>
+                {% set status = statuses[user.site_user_status_id] %}
+                {{status}}
+                <input id="status_{{user.id}}" value="{{user.site_user_status_id}}" type="hidden" />
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <div>
+            <h1 class="banner">It's a ghost town...</h1>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <img class="logo-footer navbar-brand" src="/bundle/content/image/favicon/favicon.ico" />
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Edit User</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="editUserForm" name="userForm">
+                  <input id="editUserId" name="id" type="hidden" />
+                  <div class="mb-3">
+                      <label for="editUsername" class="form-label">Username</label>
+                      <input id="editUsername" name="username" type="text" class="form-control" maxlength="64">
+                  </div>
+                  <div class="mb-3">
+                    <label for="editEmail" class="form-label">Email</label>
+                    <input id="editEmail" name="email" type="email" class="form-control" aria-describedby="emailHelp" maxlength="320">
+                  </div>
+                  <div class="mb-3">
+                    <label for="statusDdl" class="form-label">Status</label>
+                    <select id="statusDdl" name="site_user_status_id" class="form-control" aria-labelledby="statusDdl">
+                      {% for id, name in statuses %}
+                        <option value="{{id}}">{{name}}</option>                    
+                      {% endfor %}
+                    </select> 
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-success btn-ghost" data-bs-dismiss="modal">Close</button>
+            <button form="editUserForm" type="submit" class="btn btn-outline-success btn-ghost">Save</button>
+          </div>
+        </div>
+      </div>
+  </div>
+{% endblock %}

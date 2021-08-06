@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <h5 class="card-header center-content">
+        <span><img src="/bundle/content/image/Warning.gif"/></span>
+        Oof!
+        <span><img src="/bundle/content/image/Warning.gif"/></span>
+    </h5>
+    <div class="card-body center-content">
+      <p class="card-title">
+        <p>An error occurred when trying to process your request.</p>
+        <p>{{error_message}}</p>
+      </p>
+    </div>
+</div>
+<footer>
+  <img class="logo-footer navbar-brand" src="/bundle/content/image/favicon/favicon.ico" />
+</footer>
+{% endblock %}

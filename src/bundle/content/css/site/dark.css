@@ -1,0 +1,19 @@
+html {
+    --navbar-background: black;
+    --body-background: #1a1d21;
+    --input-background:#222529;
+    --icon-nav: #cccccc;
+    --font-primary: #e6e6e6;
+    --font-secondary: #e96cf2;
+    --font-highlight: #b3b3b3;
+    --font-lowlight: #837b85;
+    --font-alert: #de4e2b;
+    --font-placeholder: #7a7c7e;
+    --border-highlight: #848688;
+    --border-lowlight: #35373b;
+    --border-neonlight: #be5dc5;
+    --border-shadow: rgb(125 9 136 / 50%);
+    --border-alert: #7c3526;
+    --cursor: #d1d2d3;
+    --thumb: #8a738cb5;
+}

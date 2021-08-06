@@ -1,0 +1,290 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  {% if post and category and group %} 
+      {% set mode = editor_mode %}
+      {% set post_id = post.id %}
+      {% set post_name = post.title %}
+      {% set post_title = post.title %}
+      {% set post_label = post.label %}
+      {% set post_hidden = "" %}
+      {% set post_visibility = post.published %}
+      {% set post_embedded = post.embedded %}
+      {% set post_content = post.content %}
+      {% set category_id = post.post_category_id %}
+      {% set category_name = category %}
+      {% set group_id = post.post_group_id %}
+      {% set group_name = group %}
+  {% else %}
+      {% set mode = "create" %}
+      {% set post_id = "" %}
+      {% set post_name = "Select a post to edit..." %}
+      {% set post_title = "" %}
+      {% set post_label = "" %}
+      {% set post_hidden = "hidden" %}
+      {% set post_visibility = false %}
+      {% set post_embedded = false %}
+      {% set post_content = "Add content here..." %}
+      {% set category_id = 0 %}
+      {% set category_name = "blog" %}
+      {% set group_id = "" %}
+      {% set group_name = "" %}
+  {% endif %}
+
+  <script src="/bundle/script/editor.js"></script>
+
+  <div class="card">
+      <h5 class="card-header">
+          {{title}}
+      </h5>
+      <div class="card-body">
+        <form id="postForm" name="postForm">
+          <div>
+            <div class="row">
+              <!-- Mode -->  
+              <div class="col-sm-auto">            
+                <p>
+                  <div class="dropdown">
+                    <label for="modelDdlBtn" class="label-vert">Mode</label>
+                    <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="modeDdlBtn" data-bs-toggle="dropdown" aria-expanded="false" value="{{mode}}">
+                      {{mode}}
+                    </button>
+                    <ul class="dropdown-menu select-custom" aria-labelledby="modeDdlBtn">
+                      <li><button name="modeBtn" class="dropdown-item dropdown-btn" type="button" value="create">create</button></li>
+                      <li><button name="modeBtn" class="dropdown-item dropdown-btn" type="button" value="delete">delete</button></li>
+                      <li><button name="modeBtn" class="dropdown-item dropdown-btn" type="button" value="edit">edit</button></li>
+                    </ul>
+                  </div>
+                </p>
+              </div>
+              <!-- Category -->
+              <div class="col-sm-auto">
+                <p>
+                  <input id="postCategoryId" name="post_category_id" type="hidden" value="{{category_id}}" />
+                  <div class="dropdown">
+                    <label for="categoryDdlBtn" class="label-vert">Category</label>
+                    <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="categoryDdlBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{category_name}}
+                    </button>
+                    <ul id="categoryDdl" class="dropdown-menu select-custom" aria-labelledby="categoryDdlBtn">
+                      {% for id, name in categories %}
+                        <li><button name="categoryBtn" class="dropdown-item dropdown-btn" type="button" value="{{id}}">{{name}}</button></li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </p>
+              </div>
+              <!-- Visibility -->
+              <div class="col-sm-auto">
+                <p>
+                  <input id="postPublished" name="post_published" type="hidden" value="{{post_visibility}}" />
+                  <div class="dropdown">
+                    <label for="visibilityDdlBtn" class="label-vert">Visibility</label>
+                    <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="visibilityDdlBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                      {% if post_visibility %}
+                        published
+                      {% else %}
+                        draft
+                      {% endif %}
+                    </button>
+                    <ul id="visibilityDdl" class="dropdown-menu select-custom" aria-labelledby="visibilityDdlBtn">
+                      <li><button name="visibilityBtn" class="dropdown-item dropdown-btn" type="button" value="false">draft</button></li>
+                      <li><button name="visibilityBtn" class="dropdown-item dropdown-btn" type="button" value="true">published</button></li>
+                    </ul>
+                  </div>
+                </p>
+              </div>
+              <!-- Embedded -->
+              <div class="col-sm-auto">
+                <p>
+                  <input id="postEmbedded" name="post_embedded" type="hidden" value="true" />
+                  <div class="dropdown">
+                    <label for="embeddedDdlBtn" class="label-vert">Embedded</label>
+                    <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="embeddedDdlBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                      {% if post_embedded %}
+                        yes
+                      {% else %}
+                        no
+                      {% endif %}
+                    </button>
+                    <ul id="embeddedDdl" class="dropdown-menu select-custom" aria-labelledby="embeddedDdlBtn">
+                      <li><button name="embeddedBtn" class="dropdown-item dropdown-btn" type="button" value="false">no</button></li>
+                      <li><button name="embeddedBtn" class="dropdown-item dropdown-btn" type="button" value="true">yes</button></li>
+                    </ul>
+                  </div>
+                </p>
+              </div>
+              <!-- New Group -->
+              <div id="newGroupDiv" class="col-sm-auto">
+                <p>
+                  <input id="newGroup" type="hidden" value="true" />
+                  <div class="dropdown">
+                    <label for="newGroupDdlBtn" class="label-vert">New Group</label>
+                    <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="newGroupDdlBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                      no
+                    </button>
+                    <ul id="newGroupDdl" class="dropdown-menu select-custom" aria-labelledby="newGroupDdlBtn">
+                      <li><button name="newGroupBtn" class="dropdown-item dropdown-btn" type="button" value="">no</button></li>
+                      <li><button name="newGroupBtn" class="dropdown-item dropdown-btn" type="button" value="1">yes</button></li>
+                    </ul>
+                  </div>
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Post -->              
+              <div id="postCol" class="col-md-4" {{post_hidden}}>            
+                <label for="postDdl" class="label-vert">Post</label>
+                <select id="posts" name="post_id" class="select-post form-control" aria-labelledby="postDdl">
+                  {% for post in posts %}
+                    {% if post_id == "" or post_id != post.id %}
+                      <option value="{{post.id}}">{{post.title}}</option>                    
+                    {% else %}
+                      <option value="{{post.id}}" selected>{{post.title}}</option>                    
+                    {% endif %}
+                  {% endfor %}
+                </select>        
+              </div>
+              <!-- Group -->
+              <div class="col-md-4">
+                <label for="groupDdl" class="label-vert">Group</label>
+                <select id="groups" name="post_group_id" class="select-group form-control" aria-labelledby="groupDdl">
+                  {% for id, name in groups %}
+                    {% if name != group_name %}
+                      <option value="{{id}}">{{name}}</option>                    
+                    {% else %}
+                      <option value="{{id}}" selected>{{name}}</option>                    
+                    {% endif %}
+                  {% endfor %}
+                </select> 
+                <input id="groupName" name="post_group_name" placeholder="Create a group..." class="form-control" hidden />
+              </div>
+              <!-- Title -->
+              <div class="col-md-4">
+                <label for="title" class="label-vert">Title</label>
+                <input id="title" name="post_title" placeholder="Create a title..." class="form-control" value="{{post_title}}" />
+              </div>
+              <!-- Label -->
+              <div class="col-md-4">
+                <label for="title" class="label-vert">Label</label>
+                <input id="label" name="post_label" placeholder="Create a label..." class="form-control" value="{{post_label}}" />
+              </div>
+          </div>
+          <br />
+
+          <!-- Editor -->
+          <label for="contentForm" class="label-vert">Content</label>
+          <form id="contentForm" name="contentForm" method="post" action="/publish_post">
+            <div id="toolBar1" class="toolbar">
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="formatDdlBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                  Formatting
+                </button>
+                <ul class="dropdown-menu select-custom" aria-labelledby="formatDdlBtn">
+                  <li><button name="formatBtn" class="dropdown-item dropdown-btn" type="button" value="h1">Title 1</button></li>
+                  <li><button name="formatBtn" class="dropdown-item dropdown-btn" type="button" value="h2">Title 2</button></li>
+                  <li><button name="formatBtn" class="dropdown-item dropdown-btn" type="button" value="h3">Title 3</button></li>
+                  <li><button name="formatBtn" class="dropdown-item dropdown-btn" type="button" value="h4">Title 4</button></li>
+                  <li><button name="formatBtn" class="dropdown-item dropdown-btn" type="button" value="h5">Title 5</button></li>
+                  <li><button name="formatBtn" class="dropdown-item dropdown-btn" type="button" value="h6">Subtitle</button></li>
+                  <li><button name="formatBtn" class="dropdown-item dropdown-btn" type="button" value="p">Paragraph</button></li>
+                  <li><button name="formatBtn" class="dropdown-item dropdown-btn" type="button" value="pre">Preformatted</button></li>
+                </ul>
+              </div>
+
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="fontDdlBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                  Font
+                </button>
+                <ul class="dropdown-menu select-custom" aria-labelledby="fontDdlBtn">
+                  <li><button name="fontBtn" class="dropdown-item dropdown-btn" type="button" value="Arial">Arial</button></li>
+                  <li><button name="fontBtn" class="dropdown-item dropdown-btn" type="button" value="Arial Black">Arial Black</button></li>
+                  <li><button name="fontBtn" class="dropdown-item dropdown-btn" type="button" value="Courier New">Courier New</button></li>
+                  <li><button name="fontBtn" class="dropdown-item dropdown-btn" type="button" value="Times New Roman">Times New Roman</button></li>
+                </ul>
+              </div>
+
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="fontSizeDdlBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                  Font Size
+                </button>
+                <ul class="dropdown-menu select-custom" aria-labelledby="fontSizeDdlBtn">
+                  <li><button name="fontSizeBtn" class="dropdown-item dropdown-btn" type="button" value="1">Very Small</button></li>
+                  <li><button name="fontSizeBtn" class="dropdown-item dropdown-btn" type="button" value="2">Small</button></li>
+                  <li><button name="fontSizeBtn" class="dropdown-item dropdown-btn" type="button" value="3">Normal</button></li>
+                  <li><button name="fontSizeBtn" class="dropdown-item dropdown-btn" type="button" value="4">Medium</button></li>
+                  <li><button name="fontSizeBtn" class="dropdown-item dropdown-btn" type="button" value="5">Large</button></li>
+                  <li><button name="fontSizeBtn" class="dropdown-item dropdown-btn" type="button" value="6">Very Large</button></li>
+                  <li><button name="fontSizeBtn" class="dropdown-item dropdown-btn" type="button" value="7">Huge</button></li>
+                </ul>
+              </div>
+              
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="colorDdlBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                  Color
+                </button>
+                <ul class="dropdown-menu select-custom" aria-labelledby="colorDdlBtn">
+                  <li><button name="colorBtn" class="dropdown-item dropdown-btn" type="button" value="red">Red</button></li>
+                  <li><button name="colorBtn" class="dropdown-item dropdown-btn" type="button" value="blue">Blue</button></li>
+                  <li><button name="colorBtn" class="dropdown-item dropdown-btn" type="button" value="green">Green</button></li>
+                  <li><button name="colorBtn" class="dropdown-item dropdown-btn" type="button" value="black">Black</button></li>
+                  <li><button name="colorBtn" class="dropdown-item dropdown-btn" type="button" value="white">White</button></li>
+                </ul>
+              </div>
+
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-btn" type="button" id="backgroundDdlBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                  Background
+                </button>
+                <ul class="dropdown-menu select-custom" aria-labelledby="backgroundDdlBtn">
+                  <li><button name="backgroundBtn" class="dropdown-item dropdown-btn" type="button" value="red">Red</button></li>
+                  <li><button name="backgroundBtn" class="dropdown-item dropdown-btn" type="button" value="blue">Blue</button></li>
+                  <li><button name="backgroundBtn" class="dropdown-item dropdown-btn" type="button" value="green">Green</button></li>
+                  <li><button name="backgroundBtn" class="dropdown-item dropdown-btn" type="button" value="black">Black</button></li>
+                  <li><button name="backgroundBtn" class="dropdown-item dropdown-btn" type="button" value="white">White</button></li>
+                </ul>
+              </div>
+            </div>
+            <div id="toolBar2">
+              <img id="cleanBtn" class="icon-btn" title="Clean" src="/bundle/content/image/Broom.png" />
+              <img id="printBtn" class="icon-btn" title="Print" src="/bundle/content/image/Printer.png" />
+              <img name="iconBtn" class="icon-btn" title="Undo" alt="undo" src="/bundle/content/image/Undo.png" />
+              <img name="iconBtn" class="icon-btn" title="Redo" alt="redo" src="/bundle/content/image/Redo.png" />
+              <img name="iconBtn" class="icon-btn" title="Remove Formatting" alt="removeFormat" src="/bundle/content/image/RemoveFormat.png" />
+              <img name="iconBtn" class="icon-btn" title="Bold" alt="bold" src="/bundle/content/image/Bold.png" />
+              <img name="iconBtn" class="icon-btn" title="Italic" alt="italic" src="/bundle/content/image/Italic.png" />
+              <img name="iconBtn" class="icon-btn" title="Underline" alt="underline" src="/bundle/content/image/Underline.png" />
+              <img name="iconBtn" class="icon-btn" title="Left Align" alt="justifyleft" src="/bundle/content/image/LeftAlign.png" />
+              <img name="iconBtn" class="icon-btn" title="Center Align" alt="justifycenter" src="/bundle/content/image/CenterAlign.png" />
+              <img name="iconBtn" class="icon-btn" title="Right Align" alt="justifyright" src="/bundle/content/image/RightAlign.png" />
+              <img name="iconBtn" class="icon-btn" title="Numbered List" alt="insertorderedlist" src="/bundle/content/image/NumberedList.png" />
+              <img name="iconBtn" class="icon-btn" title="Dotted List" alt="insertunorderedlist" src="/bundle/content/image/BulletList.png" />
+              <img id="quoteBtn" class="icon-btn" title="Quote" src="/bundle/content/image/Quote.png" />
+              <img name="iconBtn" class="icon-btn" title="Delete Indentation" alt="outdent" src="/bundle/content/image/DeleteIndent.png" />
+              <img name="iconBtn" class="icon-btn" title="Add Indentation" alt="indent" src="/bundle/content/image/AddIndent.png" />
+              <img id="hyperlinkBtn" class="icon-btn" title="Hyperlink" src="/bundle/content/image/Hyperlink.png" />
+            </div>
+
+            <input id="postContent" name="post_content" type="hidden" value="" />
+            <div id="postContentBox" contenteditable="true" spellcheck="true" class="content-box">
+              {{post_content}}
+            </div>
+            &nbsp;
+            <p id="editMode">
+              <label for="docModeToggle">Show HTML</label>
+              <label class="switch">
+                <input id="docModeToggle" name="docModeToggle" type="checkbox" /> 
+                <span class="slider round"></span>
+              </label>
+            </p>
+            <p>
+              <input id="submitBtn" type="submit" value="Submit" class="btn btn-outline-success btn-ghost" />
+            </p>
+          </form>
+        </form>
+      </div>
+  </div>
+
+{% endblock %}

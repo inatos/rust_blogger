@@ -1,0 +1,32 @@
+<script src="/bundle/script/signup.js"></script>
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="signupModalLabel">Signup</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="signupForm" name="userForm">
+                <div class="mb-3">
+                    <label for="signupUsername" class="form-label">Username</label>
+                    <input id="signupUsername" name="username" type="text" class="form-control" maxlength="64">
+                </div>
+                <div class="mb-3">
+                  <label for="signupEmail" class="form-label">Email</label>
+                  <input id="signupEmail" name="email" type="email" class="form-control" aria-describedby="emailHelp" maxlength="320">
+                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="signupPassword" class="form-label">Password</label>
+                  <input id="signupPassword" name="password" type="password" class="form-control" maxlength="50">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-success btn-ghost" data-bs-dismiss="modal">Close</button>
+          <button form="signupForm" type="submit" class="btn btn-outline-success btn-ghost">Submit</button>
+        </div>
+      </div>
+    </div>
+</div>

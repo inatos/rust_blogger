@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <script src="/bundle/script/posts.js"></script>
+
+  {% for post_info in posts_info %}
+    {% set post = post_info.0 %}
+    <div class="card">
+      <h5 class="card-header">
+        {% if post_info.post.group %}
+            <a href="#">{{post.group}}: {{post.title}}</a>
+        {% else %} 
+            <a href="#">{{post.title}}</a>
+        {% endif %}
+      </h5>
+      <div class="card-body">
+        <footer class="blockquote-footer">Posted: <cite title="{{post.created}}">{{post.created | date}}</cite></footer>
+        <p class="card-text">
+          <div id="postContent_{{post.id}}">{{post.content}}</div>
+          {% if post.embedded %}
+              <script>
+                  $("#postContent_{{post.id}}").html($("#postContent_{{post.id}}").text());
+              </script>
+          {% endif %}
+        </p>
+        {% if post.created == post.updated %}
+          <footer class="blockquote-footer">Updated: <cite title="{{post.updated}}">{{post.updated | date}}</cite></footer>
+        {% endif %}
+        <hr />
+        <div class="accordion" id="discussionSection_{{post.id}}">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="discussionHeading_{{post.id}}">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#discussionCollapse" aria-expanded="true" aria-controls="discussionCollapse">
+                <h5>Discussion</h5>
+              </button>
+            </h2>
+            <div id="discussionCollapse" class="accordion-collapse collapse show" aria-labelledby="discussionHeading_{{post.id}}" data-bs-parent="#discussionSection_{{post.id}}">
+              <div class="accordion-body">
+                {% for comment_info in post_info.1 %}
+                  <div>
+                    <label for="comment_{{comment_info.0.id}}" class="form-label form-label-alt">{{comment_info.1.username}}</label>
+                    <p id="comment_{{comment_info.0.id}}" name="comment">{{comment_info.0.content}}</p>
+                  </div>                
+                  <hr/>
+                {% else %}
+                  <h6>No comments yet...start the conversation!</h6>
+                  <hr/>
+                {% endfor %}
+                {% if authenticated %}
+                  <form name="comment_form">
+                    <input name="post_id" type="hidden" value="{{post.id}}" />
+                    <p>
+                      <textarea id="newComment_{{post.id}}" name="comment_content" type="text" class="form-control" maxlength="500" placeholder="Write stuff here..."></textarea>
+                    </p>
+                    <input type="submit" value="Publish" class="btn btn-outline-success btn-ghost" />
+                  </form>
+                {% else %}
+                  <p>Login to share your thoughts <span><img src="/bundle/content/image/UpsideDownSmiley.png"/></span></p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img class="logo-footer navbar-brand" src="/bundle/content/image/favicon/favicon.ico" />
+  {% else %}
+    <div>
+        <h1 class="banner">No new posts!</h1>
+    </div>
+    <img class="logo-footer navbar-brand" src="/bundle/content/image/favicon/favicon.ico" />
+  {% endfor %}
+{% endblock %}
