@@ -9,7 +9,7 @@
 
 **Database**
 1. Install [Postgresql](https://www.postgresql.org/download/).
-2. (Optional) Install [pgAdmin](https://www.pgadmin.org/download/). (if you prefer using command line)
+2. (Optional) Install [pgAdmin](https://www.pgadmin.org/download/).
 3. Create your postgres user.
 
 **App**
