@@ -14,13 +14,13 @@
 
 **App**
 1. Install [Rust](https://www.rust-lang.org/tools/install).
-2. Update Rust (command line):  rustup update
+2. Update Rust (command line):  `rustup update`
 3. Install Diesel (command line): `cargo install diesel_cli --no-default-features --features postgres`
 4. Clone/Download this project.
 5. Navigate to the project’s root directory.
 6. Edit .env to use your postgres user credentials.
 7. Setup Diesel (command line): `diesel setup` (If it doesn’t work use full command `diesel setup --database-url "postgres://postgres:password@localhost/rust_blogger"`)
-8. Run it: cargo run 
+8. Run it: `cargo run` 
 
 **Startup**
 1. In your browser navigate to the homepage:  [http://127.0.0.1/](http://127.0.0.1/)
@@ -29,7 +29,7 @@
 4. Now you can access the admin view.
 
 **Create Your First Post**
-1. Login in as the “admin” user.
+1. Login as the “admin” user.
 2. Navigate to “Editor” in the navbar.
 3. Set mode to “create”.
 4. Choose a post category.
