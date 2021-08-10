@@ -43,20 +43,26 @@
 
 ## Development Resources
 
-**WatchExec**: Used for auto compiling your project.
+**WatchExec**: Auto compile your project.
 * [WatchExec Install](https://github.com/watchexec/watchexec)
+
+**Actix**: Backend framework.
+* [Docs](https://actix.rs/docs/)
 
 **Diesel**: Database and ORM commands.
 * [Guides](https://diesel.rs/guides/)
 * [Diesel Rust Types](https://gist.github.com/steveh/7c7145409a5eed6b698ee8b609b6d1fc)
 
-**Templating**: 
+**Templating**: Template engine for modular frontend development.
 * [Tera](https://tera.netlify.app/docs/https://tera.netlify.app/docs/)
+
+**Bootstrap**: Frontend styling.
+* [Docs](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 
 **VPS**: Deploying on a VPS.
 * [Point Domain to VPS](https://www.hostinger.com/tutorials/dns/how-to-point-domain-to-vps)
 
-**Docker**: 
+**Docker**: Containerize the app for deployment.
 * [Docker Install](https://docs.docker.com/get-docker/)
 * [Docker Compose Install](https://docs.docker.com/compose/install/)
 * [Docker Best Practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
