@@ -54,7 +54,7 @@
 * [Diesel Rust Types](https://gist.github.com/steveh/7c7145409a5eed6b698ee8b609b6d1fc)
 
 **Templating**: Template engine for modular frontend development.
-* [Tera](https://tera.netlify.app/docs/https://tera.netlify.app/docs/)
+* [Tera](https://tera.netlify.app/docs/)
 
 **Bootstrap**: Frontend styling.
 * [Docs](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
